@@ -12,7 +12,7 @@ import (
 /*
 #include <string.h>
 #include "cozo_c.h"
-#cgo LDFLAGS: -L${SRCDIR} -lcozo_c -lstdc++ -lsqlite3
+#cgo LDFLAGS: -lcozo_c -lstdc++ -lsqlite3
 #cgo darwin LDFLAGS: -framework Security
 */
 import "C"
