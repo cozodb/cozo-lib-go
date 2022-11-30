@@ -1,11 +1,17 @@
-package main
+/*
+ * Copyright 2022, The Cozo Project Authors.
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+ * If a copy of the MPL was not distributed with this file,
+ * You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
+
+package cozo
 
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"github.com/stretchr/objx"
-	"log"
 	"unsafe"
 )
 
@@ -269,80 +275,4 @@ func (db *CozoDB) ImportRelationsFromBackup(path string, relations []string) err
 	} else {
 		return nil
 	}
-}
-
-func main() {
-	db, err := New("mem", "", nil)
-	if err != nil {
-		log.Fatal(err)
-	}
-	_, _ = db.Run("?[a,b,c] <- [[1,2,3]] :create s{a, b, c}", nil)
-	{
-		res, _ := db.Run("?[a,b,c] := *s[a,b,c]", nil)
-		fmt.Println(res)
-	}
-
-	{
-		_, err := db.Run("?[x] <- [[1,2,3]]", nil)
-		fmt.Println(err)
-	}
-
-	{
-		err := db.Backup("test.db")
-		fmt.Println(err)
-
-		db2, err := New("mem", "", nil)
-		_ = db2.Restore("test.db")
-
-		res, err := db2.Run("?[a,b,c] := *s[a,b,c]", nil)
-		if err != nil {
-			log.Fatal(err)
-		}
-		fmt.Println(res)
-	}
-
-	{
-		data, err := db.ExportRelations([]string{"s"})
-		if err != nil {
-			log.Fatal(err)
-		}
-		fmt.Println(data)
-		db3, _ := New("mem", "", nil)
-		_, _ = db3.Run(":create s {a, b, c}", nil)
-
-		res, err := db3.Run("?[a,b,c] := *s[a,b,c]", nil)
-		if err != nil {
-			log.Fatal(err)
-		}
-		fmt.Println("db3!")
-		fmt.Println(res)
-		_ = db3.ImportRelations(data)
-
-		res, err = db3.Run("?[a,b,c] := *s[a,b,c]", nil)
-		if err != nil {
-			log.Fatal(err)
-		}
-		fmt.Println("db3 imported!")
-		fmt.Println(res)
-
-		db4, _ := New("mem", "", nil)
-		_, _ = db4.Run(":create s {a, b, c}", nil)
-
-		res, err = db4.Run("?[a,b,c] := *s[a,b,c]", nil)
-		if err != nil {
-			log.Fatal(err)
-		}
-		fmt.Println("db4!")
-		fmt.Println(res)
-		_ = db4.ImportRelationsFromBackup("test.db", []string{"s"})
-
-		res, err = db4.Run("?[a,b,c] := *s[a,b,c]", nil)
-		if err != nil {
-			log.Fatal(err)
-		}
-		fmt.Println("db4 imported!")
-		fmt.Println(res)
-	}
-
-	db.Close()
 }

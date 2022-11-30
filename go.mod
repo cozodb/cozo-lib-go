@@ -1,4 +1,4 @@
-module cozo
+module github.com/cozodb/cozo-lib-go
 
 go 1.19
 
