@@ -18,7 +18,7 @@ import (
 /*
 #include <string.h>
 #include "cozo_c.h"
-#cgo LDFLAGS: -lcozo_c -lstdc++ -lsqlite3
+#cgo LDFLAGS: -lcozo_c -lstdc++ -lm
 #cgo darwin LDFLAGS: -framework Security
 */
 import "C"
