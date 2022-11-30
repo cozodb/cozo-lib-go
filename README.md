@@ -50,10 +50,10 @@ See the [test file](cozo_test.go) for example usage.
 /**
  * Constructor, the returned database must be closed after use.
  *
- * @param engine:  defaults to 'mem', the in-memory non-persistent engine.
+ * @param engine:  'mem' is for the in-memory non-persistent engine.
  *                 'sqlite', 'rocksdb' and maybe others are available,
  *                 depending on compile time flags.
- * @param path:    path to store the data on disk, defaults to 'data.db',
+ * @param path:    path to store the data on disk,
  *                 may not be applicable for some engines such as 'mem'
  * @param options: defaults to nil, ignored by all the engines in the published NodeJS artefact
  */
