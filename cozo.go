@@ -19,6 +19,7 @@ import (
 #include <string.h>
 #include "cozo_c.h"
 #cgo LDFLAGS: -lcozo_c -lstdc++ -lm
+#cgo windows LDFLAGS: -lbcrypt -lwsock32 -lws2_32 -lshlwapi -lrpcrt4
 #cgo darwin LDFLAGS: -framework Security
 */
 import "C"
