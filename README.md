@@ -42,6 +42,76 @@ the GNU version of the static library (`libcozo_c` ending in `x86_64-pc-windows-
 Or just use [WSL](https://learn.microsoft.com/en-us/windows/wsl/install).
 It is much easier and Cozo runs much faster under WSL.
 
+## API
+
+See the [test file](cozo_test.go) for example usage.
+
+```go
+/**
+ * Constructor, the returned database must be closed after use.
+ *
+ * @param engine:  defaults to 'mem', the in-memory non-persistent engine.
+ *                 'sqlite', 'rocksdb' and maybe others are available,
+ *                 depending on compile time flags.
+ * @param path:    path to store the data on disk, defaults to 'data.db',
+ *                 may not be applicable for some engines such as 'mem'
+ * @param options: defaults to nil, ignored by all the engines in the published NodeJS artefact
+ */
+func New(engine string, path string, options Map) (CozoDB, error)
+
+/**
+ * You must call this method for any database you no longer want to use:
+ * otherwise the native resources associated with it may linger for as
+ * long as your program runs. Simply `delete` the variable is not enough.
+ */
+func (db *CozoDB) Close()
+
+/**
+ * Runs a query
+ *
+ * @param query: the query
+ * @param params: the parameters as key-value pairs, defaults to {} if nil
+ */
+func (db *CozoDB) Run(query string, params Map) (NamedRows, error)
+
+/**
+ * Export several relations
+ *
+ * @param relations:  names of relations to export, in an array.
+ */
+func (db *CozoDB) ExportRelations(relations []string) (Map, error)
+
+/**
+ * Import several relations
+ *
+ * @param data: in the same form as returned by `exportRelations`. The relations
+ *              must already exist in the database.
+ */
+func (db *CozoDB) ImportRelations(payload Map) error
+
+/**
+ * Backup database
+ *
+ * @param path: path to file to store the backup.
+ */
+func (db *CozoDB) Backup(path string) error
+
+/**
+ * Restore from a backup. Will fail if the current database already contains data.
+ *
+ * @param path: path to the backup file.
+ */
+func (db *CozoDB) Restore(path string) error
+
+/**
+ * Import several relations from a backup. The relations must already exist in the database.
+ *
+ * @param path: path to the backup file.
+ * @param relations: the relations to import.
+ */
+func (db *CozoDB) ImportRelationsFromBackup(path string, relations []string) error
+```
+
 ## Frequently encountered problems
 
 If you encounter a problem when trying to use this library for your project,
