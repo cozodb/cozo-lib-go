@@ -1,5 +1,7 @@
 # Cozo for Golang
 
+[![Go](https://img.shields.io/github/v/release/cozodb/cozo-lib-go)](https://github.com/cozodb/cozo-lib-go)
+
 This document describes how to set up the Cozo module for use in Golang projects.
 To learn how to use CozoDB (CozoScript), follow
 the [tutorial](https://nbviewer.org/github/cozodb/cozo-docs/blob/main/tutorial/tutorial.ipynb)
@@ -7,37 +9,43 @@ first and then read the [manual](https://cozodb.github.io/current/manual/). You 
 described in the tutorial with an in-browser DB [here](https://cozodb.github.io/wasm-demo/).
 
 
-## Usage
+## Setup
 
 You need to download the compiled C library files for your system
-(files starting with `libcozo_c`), uncompress it:
+(files starting with `libcozo_c`) from the [release page](https://github.com/cozodb/cozo/releases), 
+uncompress it somewhere, and set a few environment
+variables before you can use this library.
+The following script ([here](pull_libs.sh)) does this for you on UNIX systems:
 
 ```bash
-gunzip libcozo_c*
+COZO_VERSION=0.2.2
+
+COZO_PLATFORM=x86_64-unknown-linux-gnu # for Linux
+#COZO_PLATFORM=aarch64-apple-darwin # uncomment for ARM Mac
+#COZO_PLATFORM=x86_64-apple-darwin # uncomment  for Intel Mac
+#COZO_PLATFORM=x86_64-pc-windows-gnu # uncomment for Windows PC
+
+URL=https://github.com/cozodb/cozo/releases/download/v${COZO_VERSION}/libcozo_c-${COZO_VERSION}-${COZO_PLATFORM}.a.gz
+
+mkdir libs
+echo "Download from ${URL}"
+curl -L $URL -o libs/libcozo_c.a.gz
+gunzip -f libs/libcozo_c.a.gz
+export CGO_LDFLAGS="-L/${PWD}/libs"
 ```
 
-and rename it to `libcozo_c.a`.
+If you used the [script](pull_libs.sh), you need to call it thus
+to make the environment variables available: `. ./pull_libs.sh`
 
-Then you need to set the environment variable
-
-```bash
-export CGO_LDFLAGS="-L/<absolute-path-to-directory-containing-the-library>"
-```
-
-for example, if you placed the library in `/home/xxx/libs`, you should use
-
-```bash
-export CGO_LDFLAGS="-L/home/xxx/libs"
-```
-
-With the environment variable set, you can run `go build`, etc. for your project.
+Now you can run `go build`, etc. for your project.
 
 ### Note for Windows users
 
 On Windows, in addition to following the above instructions, 
 you must have [MinGW](https://www.mingw-w64.org/) installed 
 (Go doesn't seem to work with MSVC compiliers), and you must use 
-the GNU version of the static library (`libcozo_c` ending in `x86_64-pc-windows-gnu.a`).
+the GNU version of the static library (`libcozo_c` ending in `x86_64-pc-windows-gnu.a`),
+not the MSVC version.
 
 Or just use [WSL](https://learn.microsoft.com/en-us/windows/wsl/install).
 It is much easier and Cozo runs much faster under WSL.
