@@ -92,6 +92,9 @@ func (db *CozoDB) ExportRelations(relations []string) (Map, error)
 /**
  * Import several relations
  *
+ * Note that triggers are _not_ run for the relations, if any exists.
+ * If you need to activate triggers, use queries with parameters.
+ *
  * @param data: in the same form as returned by `exportRelations`. The relations
  *              must already exist in the database.
  */
@@ -113,6 +116,9 @@ func (db *CozoDB) Restore(path string) error
 
 /**
  * Import several relations from a backup. The relations must already exist in the database.
+ *
+ * Note that triggers are _not_ run for the relations, if any exists.
+ * If you need to activate triggers, use queries with parameters.
  *
  * @param path: path to the backup file.
  * @param relations: the relations to import.
