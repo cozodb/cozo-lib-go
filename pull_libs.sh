@@ -7,7 +7,7 @@
 # You can obtain one at https://mozilla.org/MPL/2.0/.
 #
 
-COZO_VERSION=0.3.0
+COZO_VERSION=0.4.0
 
 COZO_PLATFORM=x86_64-unknown-linux-gnu # for Linux
 #COZO_PLATFORM=aarch64-apple-darwin # uncomment for ARM Mac

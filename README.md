@@ -4,9 +4,8 @@
 
 This document describes how to set up the Cozo module for use in Golang projects.
 To learn how to use CozoDB (CozoScript), follow
-the [tutorial](https://nbviewer.org/github/cozodb/cozo-docs/blob/main/tutorial/tutorial.ipynb)
-first and then read the [manual](https://cozodb.github.io/current/manual/). You can run all the queries
-described in the tutorial with an in-browser DB [here](https://cozodb.github.io/wasm-demo/).
+the [tutorial](https://docs.cozodb.org/en/latest/tutorial.html). You can run all the queries
+described in the tutorial with an in-browser DB [here](https://www.cozodb.org/wasm-demo/).
 
 
 ## Setup
@@ -18,7 +17,7 @@ variables before you can use this library.
 The following script ([here](pull_libs.sh)) does this for you on UNIX systems:
 
 ```bash
-COZO_VERSION=0.3.0
+COZO_VERSION=0.4.0
 
 COZO_PLATFORM=x86_64-unknown-linux-gnu # for Linux
 #COZO_PLATFORM=aarch64-apple-darwin # uncomment for ARM Mac
@@ -151,6 +150,6 @@ This means that some linker flags are missing. If you look at the file
 ```
 
 The three lines defines the linker flags on all platforms, additional
-Windows flags, and additional MacOS flags. If for some reason these flags
+Windows flags, and additional macOS flags. If for some reason these flags
 are not enough, you can google what the compiler tells you is missing
 to see what flags you should add (and open an issue about the problem).
