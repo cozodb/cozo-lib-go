@@ -14,7 +14,7 @@ variables before you can use this library.
 The following script ([here](pull_libs.sh)) does this for you on UNIX systems:
 
 ```bash
-COZO_VERSION=0.5.1
+COZO_VERSION=0.6.0
 
 COZO_PLATFORM=x86_64-unknown-linux-gnu # for Linux
 #COZO_PLATFORM=aarch64-apple-darwin # uncomment for ARM Mac
