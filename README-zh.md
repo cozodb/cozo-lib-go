@@ -9,7 +9,7 @@
 首先你需要根据你的操作系统和处理器，从 [GitHub](下载页面) 下载对应的预编译的 C 语言库（以 `libcozo_c` 开头的文件）。下载后需要将其解压，然后设置一些环境变量。这个 [脚本](pull_libs.sh) 在类 UNIX 系统里可以帮你把这些做了：
 
 ```bash
-COZO_VERSION=0.6.0
+COZO_VERSION=0.7.0
 
 COZO_PLATFORM=x86_64-unknown-linux-gnu # for Linux
 #COZO_PLATFORM=aarch64-apple-darwin # uncomment for ARM Mac
