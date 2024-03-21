@@ -18,4 +18,6 @@ cozo
 *.a
 *.db
 libs
-.idea
+
+.idea/
+.DS_Store
