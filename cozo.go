@@ -11,8 +11,9 @@ package cozo
 import (
 	"encoding/json"
 	"errors"
-	"github.com/stretchr/objx"
 	"unsafe"
+
+	"github.com/stretchr/objx"
 )
 
 /*
@@ -90,7 +91,7 @@ func (db *CozoDB) Close() {
 	C.cozo_close_db(db.Id)
 }
 
-func (db *CozoDB) Run(query string, params Map) (NamedRows, error) {
+func (db *CozoDB) Run(query string, params Map, immutable bool) (NamedRows, error) {
 	var paramsStr *C.char
 	result := NamedRows{
 		Ok:   false,
@@ -112,7 +113,8 @@ func (db *CozoDB) Run(query string, params Map) (NamedRows, error) {
 	queryStr := C.CString(query)
 	defer C.free(unsafe.Pointer(queryStr))
 
-	res := C.cozo_run_query(db.Id, queryStr, paramsStr)
+	ib := C.bool(immutable)
+	res := C.cozo_run_query(db.Id, queryStr, paramsStr, ib)
 	defer C.cozo_free_str(res)
 
 	cLen := C.int(C.strlen(res))
